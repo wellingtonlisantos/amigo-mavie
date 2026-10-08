@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Amigo Mavie</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                180deg,
+                #59d9e8,
+                #8ee8c5
+            );
+
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+            text-align: center;
+        }
+
+        h1 {
+            color: #7b3f98;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .pet-area {
+            background: #dff9ed;
+            border-radius: 25px;
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+
+        .pet {
+            font-size: 120px;
+            margin: 15px 0;
+        }
+
+        .pet-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .status {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .status-item {
+            margin-bottom: 12px;
+        }
+
+        .status-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .bar {
+            width: 100%;
+            height: 18px;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.3s;
+        }
+
+        .health {
+            background: #ff6b6b;
+        }
+
+        .food {
+            background: #ffb84d;
+        }
+
+        .energy {
+            background: #4dcc6a;
+        }
+
+        .happiness {
+            background: #ffd93d;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        button {
+            border: none;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #7b3f98;
+            color: white;
+            transition: transform 0.15s;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            background: #fff3cd;
+            border-radius: 15px;
+            color: #664d03;
+            font-weight: bold;
+        }
+
+        .coins {
+            margin: 15px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 400px) {
+
+            .pet {
+                font-size: 90px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <main class="game">
+
+        <h1>🐾 AMIGO MAVIE</h1>
+
+        <p class="subtitle">
+            Um mundo de amigos para cuidar, brincar e criar!
+        </p>
+
+        <section class="pet-area">
+
+            <div class="pet" id="pet">
+                🐻
+            </div>
+
+            <div class="pet-name">
+                Teddy
+            </div>
+
+            <div class="coins">
+                🪙 Moedas: <span id="coins">0</span>
+            </div>
+
+            <div class="status">
+
+                <div class="status-item">
+
+                    <div class="status-title">
+                        <span>❤️ Saúde</span>
+                        <span id="healthText">100</span>
+                    </div>
+
+                    <div class="bar">
+                        <div
+                            id="healthBar"
+                            class="bar-fill health"
+                            style="width: 100%">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-title">
+                        <span>🍎 Fome</span>
+                        <span id="foodText">70</span>
+                    </div>
+
+                    <div class="bar">
+                        <div
+                            id="foodBar"
+                            class="bar-fill food"
+                            style="width: 70%">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-title">
+                        <span>⚡ Energia</span>
+                        <span id="energyText">80</span>
+                    </div>
+
+                    <div class="bar">
+                        <div
+                            id="energyBar"
+                            class="bar-fill energy"
+                            style="width: 80%">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="status-item">
+
+                    <div class="status-title">
+                        <span>😊 Felicidade</span>
+                        <span id="happinessText">90</span>
+                    </div>
+
+                    <div class="bar">
+                        <div
+                            id="happinessBar"
+                            class="bar-fill happiness"
+                            style="width: 90%">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="buttons">
+
+            <button onclick="feedPet()">
+                🍎 Alimentar
+            </button>
+
+            <button onclick="playWithPet()">
+                🎮 Brincar
+            </button>
+
+            <button onclick="sleepPet()">
+                😴 Dormir
+            </button>
+
+            <button onclick="petPet()">
+                ❤️ Carinho
+            </button>
+
+        </section>
+
+        <div class="message" id="message">
+            Teddy está muito feliz em conhecer você! 🐻❤️
+        </div>
+
+    </main>
+
+    <script>
+
+        let health = 100;
+        let food = 70;
+        let energy = 80;
+        let happiness = 90;
+        let coins = 0;
+
+        function limit(value) {
+
+            if (value > 100) return 100;
+
+            if (value < 0) return 0;
+
+            return value;
+        }
+
+        function updateGame() {
+
+            health = limit(health);
+            food = limit(food);
+            energy = limit(energy);
+            happiness = limit(happiness);
+
+            document.getElementById("healthText").textContent =
+                health;
+
+            document.getElementById("foodText").textContent =
+                food;
+
+            document.getElementById("energyText").textContent =
+                energy;
+
+            document.getElementById("happinessText").textContent =
+                happiness;
+
+            document.getElementById("coins").textContent =
+                coins;
+
+            document.getElementById("healthBar").style.width =
+                health + "%";
+
+            document.getElementById("foodBar").style.width =
+                food + "%";
+
+            document.getElementById("energyBar").style.width =
+                energy + "%";
+
+            document.getElementById("happinessBar").style.width =
+                happiness + "%";
+        }
+
+        function showMessage(message) {
+
+            document.getElementById("message").textContent =
+                message;
+        }
+
+        function feedPet() {
+
+            food += 20;
+            happiness += 5;
+
+            coins += 1;
+
+            showMessage(
+                "🍎 Teddy adorou a comida!"
+            );
+
+            updateGame();
+        }
+
+        function playWithPet() {
+
+            if (energy < 15) {
+
+                showMessage(
+                    "😴 Teddy está cansado. Deixe ele descansar!"
+                );
+
+                return;
+            }
+
+            energy -= 15;
+            happiness += 20;
+
+            coins += 5;
+
+            showMessage(
+                "🎮 Teddy se divertiu muito!"
+            );
+
+            updateGame();
+        }
+
+        function sleepPet() {
+
+            energy += 30;
+            health += 5;
+
+            showMessage(
+                "😴 Teddy dormiu e recuperou energia!"
+            );
+
+            updateGame();
+        }
+
+        function petPet() {
+
+            happiness += 10;
+
+            showMessage(
+                "❤️ Teddy adorou o carinho!"
+            );
+
+            updateGame();
+        }
+
+        updateGame();
+
+    </script>
+
+</body>
+
+</html>
